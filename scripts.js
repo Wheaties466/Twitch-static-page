@@ -32,7 +32,7 @@ function createTwitchEmbed(streamer, container) {
         width: 854,
         height: 480,
         channel: streamer,
-        parent: ["yourgithubusername.github.io"] // Replace with your GitHub Pages URL
+        parent: ["wheaties466.github.io"] 
     });
 }
 
