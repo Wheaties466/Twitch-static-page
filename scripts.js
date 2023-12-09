@@ -1,6 +1,6 @@
 // Function to hide a specific stream
-function hideStream(streamer) {
-    const streamDiv = document.getElementById('stream-div-' + streamer);
+function hideStream(streamDivId) {
+    const streamDiv = document.getElementById(streamDivId);
     if (streamDiv) {
         streamDiv.style.display = 'none';
     }
@@ -21,7 +21,8 @@ function createTwitchEmbed(streamer, container) {
     // Hide button
     const hideButton = document.createElement('button');
     hideButton.innerText = 'Hide';
-    hideButton.onclick = function() { hideStream(streamer); };
+    hideButton.className = 'hide-button';
+    hideButton.onclick = function() { hideStream(streamDivId); };
 
     streamDiv.appendChild(embedDiv);
     streamDiv.appendChild(hideButton);
@@ -32,9 +33,12 @@ function createTwitchEmbed(streamer, container) {
         width: 854,
         height: 480,
         channel: streamer,
-        parent: ["wheaties466.github.io"] 
+        parent: ["yourgithubusername.github.io"] // Replace with your GitHub Pages URL
     });
 }
+
+// Rest of your scripts.js file...
+
 
 // Function to render streams
 async function renderStreams(streamers) {
