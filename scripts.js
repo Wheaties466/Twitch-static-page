@@ -26,7 +26,7 @@ function renderStreams(streamers) {
         // Example logic - replace with actual live/offline check
         // For now, appending all to liveStreams for demonstration
         createTwitchEmbed(streamer);
-    });
+    };
 }
 
 // Fetch streamers from the text file and render streams
