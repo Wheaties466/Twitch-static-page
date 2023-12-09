@@ -1,15 +1,38 @@
+// Function to hide a specific stream
+function hideStream(streamer) {
+    const streamDiv = document.getElementById('stream-div-' + streamer);
+    if (streamDiv) {
+        streamDiv.style.display = 'none';
+    }
+}
+
 // Function to create a Twitch embed for a given streamer
 function createTwitchEmbed(streamer, container) {
     const embedDivId = 'twitch-embed-' + streamer;
+    const streamDivId = 'stream-div-' + streamer;
+    
+    const streamDiv = document.createElement('div');
+    streamDiv.id = streamDivId;
+    streamDiv.className = 'stream';
+
     const embedDiv = document.createElement('div');
     embedDiv.id = embedDivId;
-    container.appendChild(embedDiv);
+
+    // Hide button
+    const hideButton = document.createElement('button');
+    hideButton.innerText = 'Hide';
+    hideButton.onclick = function() { hideStream(streamer); };
+
+    streamDiv.appendChild(embedDiv);
+    streamDiv.appendChild(hideButton);
+
+    container.appendChild(streamDiv);
 
     new Twitch.Embed(embedDivId, {
         width: 854,
         height: 480,
         channel: streamer,
-        parent: ["wheaties466.github.io"] // 
+        parent: ["yourgithubusername.github.io"] // Replace with your GitHub Pages URL
     });
 }
 
