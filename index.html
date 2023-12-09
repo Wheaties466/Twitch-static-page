@@ -7,12 +7,16 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <button id="show-live">Show Live Streams</button>
+    <button id="show-offline">Show Offline Streams</button>
+
     <div id="live-streams" class="stream-container">
         <!-- Live streams will be dynamically injected here -->
     </div>
-    <div id="offline-streams" class="stream-container">
+    <div id="offline-streams" class="stream-container" style="display: none;">
         <!-- Offline streams will be dynamically injected here -->
     </div>
+
     <script src="https://embed.twitch.tv/embed/v1.js"></script>
     <script src="scripts.js"></script>
 </body>
