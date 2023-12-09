@@ -6,6 +6,14 @@ function hideStream(streamDivId) {
     }
 }
 
+// Function to show all streams
+function showAllStreams() {
+    const streams = document.querySelectorAll('.stream');
+    streams.forEach(stream => {
+        stream.style.display = 'block';
+    });
+}
+
 // Function to create a Twitch embed for a given streamer
 function createTwitchEmbed(streamer, container) {
     const embedDivId = 'twitch-embed-' + streamer;
@@ -33,12 +41,9 @@ function createTwitchEmbed(streamer, container) {
         width: 854,
         height: 480,
         channel: streamer,
-        parent: ["yourgithubusername.github.io"] // Replace with your GitHub Pages URL
+        parent: ["wheaties466.github.io"] // Replace with your GitHub Pages URL
     });
 }
-
-// Rest of your scripts.js file...
-
 
 // Function to render streams
 async function renderStreams(streamers) {
@@ -49,7 +54,9 @@ async function renderStreams(streamers) {
     offlineStreams.innerHTML = '';
 
     for (const streamer of streamers) {
-        if (await checkIfLive(streamer)) { // Replace with actual logic to check if live
+        // Placeholder for checking if streamer is live
+        // Replace with your logic or Twitch API call
+        if (/* logic to determine if streamer is live */) {
             createTwitchEmbed(streamer, liveStreams);
         } else {
             createTwitchEmbed(streamer, offlineStreams);
@@ -68,17 +75,13 @@ fetch('streamers.txt')
 
 // Event listeners for the toggle buttons
 document.getElementById('show-live').addEventListener('click', function() {
+    showAllStreams();
     document.getElementById('live-streams').style.display = 'flex';
     document.getElementById('offline-streams').style.display = 'none';
 });
 
 document.getElementById('show-offline').addEventListener('click', function() {
+    showAllStreams();
     document.getElementById('live-streams').style.display = 'none';
     document.getElementById('offline-streams').style.display = 'flex';
 });
-
-// Placeholder function - replace with actual Twitch API call
-async function checkIfLive(streamer) {
-    // Logic to check if the streamer is live
-    return true; // Replace with actual live check
-}
