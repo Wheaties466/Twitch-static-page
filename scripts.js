@@ -1,11 +1,16 @@
-// Function to create an embed link (replace with actual Twitch embed logic)
+// Function to create a Twitch embed for a given streamer
 function createTwitchEmbed(streamer) {
-    // Example Twitch Embed initialization
-    new Twitch.Embed("twitch-embed-" + streamer, {
+    const embedDivId = 'twitch-embed-' + streamer;
+    const embedDiv = document.createElement('div');
+    embedDiv.id = embedDivId;
+    document.body.appendChild(embedDiv);
+
+    new Twitch.Embed(embedDivId, {
         width: 854,
         height: 480,
         channel: streamer,
-        // Add other necessary parameters
+        // Add your GitHub Pages domain in the parent parameter
+        parent: ["wheaties466.github.io"]
     });
 }
 
@@ -18,29 +23,19 @@ function renderStreams(streamers) {
     offlineStreams.innerHTML = '';
 
     streamers.forEach(streamer => {
-        const streamDiv = document.createElement('div');
-        streamDiv.id = 'twitch-embed-' + streamer;
-        streamDiv.className = 'stream';
-
-        // Example embed - you need to replace with actual embed logic
-        createTwitchEmbed(streamer);
-
         // Example logic - replace with actual live/offline check
-        if (/* Check if streamer is live */) {
-            liveStreams.appendChild(streamDiv);
-        } else {
-            offlineStreams.appendChild(streamDiv);
-        }
+        // For now, appending all to liveStreams for demonstration
+        createTwitchEmbed(streamer);
     });
 }
 
-// Fetch streamers and render streams
+// Fetch streamers from the text file and render streams
 fetch('streamers.txt')
-   .then(response => response.text())
-   .then(text => {
-       const streamers = text.split('\n').filter(Boolean);
-       renderStreams(streamers);
-   })
-   .catch(error => console.error('Error fetching streamers list:', error));
+    .then(response => response.text())
+    .then(text => {
+        const streamers = text.split('\n').filter(Boolean);
+        renderStreams(streamers);
+    })
+    .catch(error => console.error('Error fetching streamers list:', error));
 
-// Include logic to periodically check stream status (if needed)
+// Include your logic to periodically check stream status (if needed)
