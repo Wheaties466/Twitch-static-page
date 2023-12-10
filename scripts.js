@@ -9,14 +9,14 @@ function hideStream(streamDivId) {
 
 // Set cookie for hidden streams
 function setHiddenStreamCookie(streamDivId) {
-    document.cookie = `hidden_${streamDivId}=true; max-age=86400; path=/`;
+    document.cookie = `hidden_${streamDivId}=true; max-age=86400; path=/`; // Cookie expires in 1 day
 }
 
 // Function to show all streams in a grid layout
 function showAllStreamsInGrid() {
     const streams = document.querySelectorAll('.stream');
     streams.forEach(stream => {
-        stream.style.display = 'grid';
+        stream.style.display = 'grid'; // Set display to grid to match CSS layout
     });
 }
 
@@ -48,8 +48,8 @@ function createTwitchEmbed(streamer, container) {
     container.appendChild(streamDiv);
 
     $(streamDiv).resizable({
-        minHeight: 480,  // Updated minimum height
-        minWidth: 854   // Updated minimum width
+        minHeight: 300,
+        minWidth: 300
     }).draggable({
         containment: 'body',
         scroll: false
@@ -84,7 +84,7 @@ function checkHiddenStreams() {
     cookies.forEach(cookie => {
         const [name, value] = cookie.trim().split('=');
         if (name.startsWith('hidden_') && value === 'true') {
-            const streamDivId = name.substring(7);
+            const streamDivId = name.substring(7); // Remove 'hidden_' prefix
             hideStream(streamDivId);
         }
     });
