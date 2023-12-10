@@ -1,15 +1,15 @@
 .stream-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(650px, 1fr));
-    gap: 30px; /* Increased gap */
+    grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
+    gap: 30px;
     padding: 20px;
 }
 
 .stream {
     border: 1px solid #ccc;
     position: relative;
+    overflow: hidden;
     resize: both;
-    overflow: auto;
 }
 
 .hide-button {
