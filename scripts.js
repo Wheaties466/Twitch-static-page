@@ -24,7 +24,7 @@ function showAllStreamsInGrid() {
 function createTwitchEmbed(streamer, container) {
     const embedDivId = 'twitch-embed-' + streamer;
     const streamDivId = 'stream-div-' + streamer;
-
+    
     const streamDiv = document.createElement('div');
     streamDiv.id = streamDivId;
     streamDiv.className = 'stream';
@@ -47,23 +47,9 @@ function createTwitchEmbed(streamer, container) {
 
     container.appendChild(streamDiv);
 
-    $(streamDiv).resizable({
-        minHeight: 300,
-        minWidth: 300,
-        resize: function(event, ui) {
-            $(this).find('.twitch-embed').each(function() {
-                $(this).width(ui.size.width);
-                $(this).height(ui.size.height - streamHeader.outerHeight(true) - hideButton.outerHeight(true));
-            });
-        }
-    }).draggable({
-        containment: 'body',
-        scroll: false
-    });
-
     new Twitch.Embed(embedDivId, {
-        width: '100%',
-        height: '100%',
+        width: 854, // Fixed width
+        height: 480, // Fixed height
         channel: streamer,
         parent: ["wheaties466.github.io"]
     });
@@ -106,23 +92,14 @@ fetch('streamers.txt')
     .catch(error => console.error('Error fetching streamers list:', error));
 
 // Event listeners for the toggle buttons
-document.addEventListener('DOMContentLoaded', function() {
-    const showLiveButton = document.getElementById('show-live');
-    const showOfflineButton = document.getElementById('show-offline');
+document.getElementById('show-live').addEventListener('click', function() {
+    showAllStreamsInGrid();
+    document.getElementById('live-streams').style.display = 'grid';
+    document.getElementById('offline-streams').style.display = 'none';
+});
 
-    if(showLiveButton) {
-        showLiveButton.addEventListener('click', function() {
-            showAllStreamsInGrid();
-            document.getElementById('live-streams').style.display = 'grid';
-            document.getElementById('offline-streams').style.display = 'none';
-        });
-    }
-
-    if(showOfflineButton) {
-        showOfflineButton.addEventListener('click', function() {
-            showAllStreamsInGrid();
-            document.getElementById('live-streams').style.display = 'none';
-            document.getElementById('offline-streams').style.display = 'grid';
-        });
-    }
+document.getElementById('show-offline').addEventListener('click', function() {
+    showAllStreamsInGrid();
+    document.getElementById('live-streams').style.display = 'none';
+    document.getElementById('offline-streams').style.display = 'grid';
 });
