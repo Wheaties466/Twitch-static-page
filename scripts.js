@@ -40,10 +40,6 @@ function createTwitchEmbed(streamer, container) {
         width: 854,
         height: 480,
         channel: streamer,
-<<<<<<< HEAD
-=======
-
->>>>>>> 6ed18af371ed1e987c9b976a21df8c7aa77c4191
         parent: ["wheaties466.github.io"] // Replace with your GitHub Pages URL
     });
 }
@@ -60,9 +56,9 @@ async function renderStreams(streamers) {
         // Placeholder for checking if streamer is live
         // Replace with your logic or Twitch API call
         //if (/* logic to determine if streamer is live */) {
-            createTwitchEmbed(streamer, liveStreams);
-        } else {
-            createTwitchEmbed(streamer, offlineStreams);
+        //    createTwitchEmbed(streamer, liveStreams);
+       // } else {
+        //    createTwitchEmbed(streamer, offlineStreams);
         }
     }
 }
