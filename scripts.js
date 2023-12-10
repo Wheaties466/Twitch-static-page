@@ -110,4 +110,12 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('show-live').addEventListener('click', function() {
         showAllStreamsInGrid();
         document.getElementById('live-streams').style.display = 'grid';
-        document.getElementById('offline-streams').
+        document.getElementById('offline-streams').style.display = 'none';
+    });
+
+    document.getElementById('show-offline').addEventListener('click', function() {
+        showAllStreamsInGrid();
+        document.getElementById('live-streams').style.display = 'none';
+        document.getElementById('offline-streams').style.display = 'grid';
+    });
+});
