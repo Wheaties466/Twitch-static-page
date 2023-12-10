@@ -1,6 +1,6 @@
 // Function to hide a specific stream
-function hideStream(streamer) {
-    const streamDiv = document.getElementById('stream-div-' + streamer);
+function hideStream(streamDivId) {
+    const streamDiv = document.getElementById(streamDivId);
     if (streamDiv) {
         streamDiv.style.display = 'none';
     }
@@ -29,7 +29,8 @@ function createTwitchEmbed(streamer, container) {
     // Hide button
     const hideButton = document.createElement('button');
     hideButton.innerText = 'Hide';
-    hideButton.onclick = function() { hideStream(streamer); };
+    hideButton.className = 'hide-button';
+    hideButton.onclick = function() { hideStream(streamDivId); };
 
     streamDiv.appendChild(embedDiv);
     streamDiv.appendChild(hideButton);
@@ -40,35 +41,41 @@ function createTwitchEmbed(streamer, container) {
         width: 854,
         height: 480,
         channel: streamer,
-        parent: ["wheaties466.github.io"] // Replace with your GitHub Pages URL
+        parent: ["wheaties466.github.io"] // Your GitHub Pages URL
     });
 }
 
 // Function to render streams
-async function renderStreams(streamers) {
+function renderStreams(streamers) {
     const liveStreams = document.getElementById('live-streams');
     const offlineStreams = document.getElementById('offline-streams');
 
     liveStreams.innerHTML = '';
     offlineStreams.innerHTML = '';
 
-   // for (const streamer of streamers) {
-        // Placeholder for checking if streamer is live
-        // Replace with your logic or Twitch API call
-        //if (/* logic to determine if streamer is live */) {
-        //    createTwitchEmbed(streamer, liveStreams);
-       // } else {
-      //      createTwitchEmbed(streamer, offlineStreams);
-    //    }
-   // }
+    streamers.forEach(streamer => {
+        createTwitchEmbed(streamer, liveStreams);
+    });
 }
 
-// Fetch streamers from the text file and render streams
+// Function to check each stream's status
+function checkStreamStatus() {
+    const streams = document.querySelectorAll('.stream');
+    streams.forEach(stream => {
+        // Basic check. This might need to be adjusted based on how Twitch embeds indicate offline status
+        if (stream.innerHTML.includes('offline')) {
+            stream.style.display = 'none';
+        }
+    });
+}
+
+// Fetch streamers from the text file, render streams, and set up periodic status check
 fetch('streamers.txt')
     .then(response => response.text())
     .then(text => {
         const streamers = text.split('\n').filter(Boolean);
         renderStreams(streamers);
+        setInterval(checkStreamStatus, 300000); // Check every 5 minutes
     })
     .catch(error => console.error('Error fetching streamers list:', error));
 
