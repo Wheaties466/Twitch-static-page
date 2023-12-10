@@ -1,20 +1,15 @@
-body {
-    text-align: center;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-}
-
 .stream-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(650px, 1fr)); /* Adjust minmax for desired column size */
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(650px, 1fr));
+    gap: 30px; /* Increased gap */
     padding: 20px;
 }
 
 .stream {
     border: 1px solid #ccc;
     position: relative;
+    resize: both;
+    overflow: auto;
 }
 
 .hide-button {

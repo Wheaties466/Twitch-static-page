@@ -50,11 +50,17 @@ function createTwitchEmbed(streamer, container) {
 
     container.appendChild(streamDiv);
 
+    // Make the streamDiv resizable
+    $(streamDiv).resizable({
+        minHeight: 480,
+        minWidth: 600
+    });
+
     new Twitch.Embed(embedDivId, {
         width: 854,
         height: 480,
         channel: streamer,
-        parent: ["wheaties466.github.io"] // Your GitHub Pages URL
+        parent: ["wheaties466.github.io"]
     });
 }
 
