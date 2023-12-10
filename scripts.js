@@ -107,15 +107,22 @@ fetch('streamers.txt')
 
 // Event listeners for the toggle buttons
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('show-live').addEventListener('click', function() {
-        showAllStreamsInGrid();
-        document.getElementById('live-streams').style.display = 'grid';
-        document.getElementById('offline-streams').style.display = 'none';
-    });
+    const showLiveButton = document.getElementById('show-live');
+    const showOfflineButton = document.getElementById('show-offline');
 
-    document.getElementById('show-offline').addEventListener('click', function() {
-        showAllStreamsInGrid();
-        document.getElementById('live-streams').style.display = 'none';
-        document.getElementById('offline-streams').style.display = 'grid';
-    });
+    if(showLiveButton) {
+        showLiveButton.addEventListener('click', function() {
+            showAllStreamsInGrid();
+            document.getElementById('live-streams').style.display = 'grid';
+            document.getElementById('offline-streams').style.display = 'none';
+        });
+    }
+
+    if(showOfflineButton) {
+        showOfflineButton.addEventListener('click', function() {
+            showAllStreamsInGrid();
+            document.getElementById('live-streams').style.display = 'none';
+            document.getElementById('offline-streams').style.display = 'grid';
+        });
+    }
 });
