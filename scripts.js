@@ -1,9 +1,15 @@
-// Function to hide a specific stream
+// Function to hide a specific stream and set a cookie
 function hideStream(streamDivId) {
     const streamDiv = document.getElementById(streamDivId);
     if (streamDiv) {
         streamDiv.style.display = 'none';
+        setHiddenStreamCookie(streamDivId);
     }
+}
+
+// Set cookie for hidden streams
+function setHiddenStreamCookie(streamDivId) {
+    document.cookie = `hidden_${streamDivId}=true; max-age=86400; path=/`; // Cookie expires in 1 day
 }
 
 // Function to show all streams
@@ -11,6 +17,8 @@ function showAllStreams() {
     const streams = document.querySelectorAll('.stream');
     streams.forEach(stream => {
         stream.style.display = 'block';
+        const streamDivId = stream.id;
+        document.cookie = `hidden_${streamDivId}=false; max-age=86400; path=/`; // Reset the cookie
     });
 }
 
@@ -23,6 +31,10 @@ function createTwitchEmbed(streamer, container) {
     streamDiv.id = streamDivId;
     streamDiv.className = 'stream';
 
+    // Stream header
+    const streamHeader = document.createElement('h3');
+    streamHeader.innerText = streamer;
+
     const embedDiv = document.createElement('div');
     embedDiv.id = embedDivId;
 
@@ -32,6 +44,7 @@ function createTwitchEmbed(streamer, container) {
     hideButton.className = 'hide-button';
     hideButton.onclick = function() { hideStream(streamDivId); };
 
+    streamDiv.appendChild(streamHeader);
     streamDiv.appendChild(embedDiv);
     streamDiv.appendChild(hideButton);
 
@@ -41,7 +54,7 @@ function createTwitchEmbed(streamer, container) {
         width: 854,
         height: 480,
         channel: streamer,
-        parent: ["wheaties466.github.io"]
+        parent: ["wheaties466.github.io"] // Your GitHub Pages URL
     });
 }
 
@@ -55,6 +68,20 @@ function renderStreams(streamers) {
 
     streamers.forEach(streamer => {
         createTwitchEmbed(streamer, liveStreams);
+    });
+
+    checkHiddenStreams();
+}
+
+// Check cookies on page load and hide streams if necessary
+function checkHiddenStreams() {
+    const cookies = document.cookie.split(';');
+    cookies.forEach(cookie => {
+        const [name, value] = cookie.trim().split('=');
+        if (name.startsWith('hidden_') && value === 'true') {
+            const streamDivId = name.substring(7); // Remove 'hidden_' prefix
+            hideStream(streamDivId);
+        }
     });
 }
 
