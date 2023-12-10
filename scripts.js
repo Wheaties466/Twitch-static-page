@@ -9,14 +9,14 @@ function hideStream(streamDivId) {
 
 // Set cookie for hidden streams
 function setHiddenStreamCookie(streamDivId) {
-    document.cookie = `hidden_${streamDivId}=true; max-age=86400; path=/`;
+    document.cookie = `hidden_${streamDivId}=true; max-age=86400; path=/`; // Cookie expires in 1 day
 }
 
 // Function to show all streams in a grid layout
 function showAllStreamsInGrid() {
     const streams = document.querySelectorAll('.stream');
     streams.forEach(stream => {
-        stream.style.display = 'grid';
+        stream.style.display = 'grid'; // Set display to grid to match CSS layout
     });
 }
 
@@ -24,7 +24,7 @@ function showAllStreamsInGrid() {
 function createTwitchEmbed(streamer, container) {
     const embedDivId = 'twitch-embed-' + streamer;
     const streamDivId = 'stream-div-' + streamer;
-
+    
     const streamDiv = document.createElement('div');
     streamDiv.id = streamDivId;
     streamDiv.className = 'stream';
@@ -49,13 +49,7 @@ function createTwitchEmbed(streamer, container) {
 
     $(streamDiv).resizable({
         minHeight: 300,
-        minWidth: 300,
-        resize: function(event, ui) {
-            $(this).find('.twitch-embed').each(function() {
-                $(this).width(ui.size.width);
-                $(this).height(ui.size.height - streamHeader.outerHeight(true) - hideButton.outerHeight(true));
-            });
-        }
+        minWidth: 300
     }).draggable({
         containment: 'body',
         scroll: false
@@ -90,7 +84,7 @@ function checkHiddenStreams() {
     cookies.forEach(cookie => {
         const [name, value] = cookie.trim().split('=');
         if (name.startsWith('hidden_') && value === 'true') {
-            const streamDivId = name.substring(7);
+            const streamDivId = name.substring(7); // Remove 'hidden_' prefix
             hideStream(streamDivId);
         }
     });
@@ -106,8 +100,14 @@ fetch('streamers.txt')
     .catch(error => console.error('Error fetching streamers list:', error));
 
 // Event listeners for the toggle buttons
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('show-live').addEventListener('click', function() {
-        showAllStreamsInGrid();
-        document.getElementById('live-streams').style.display = 'grid';
-        document.getElementById('offline-streams').
+document.getElementById('show-live').addEventListener('click', function() {
+    showAllStreamsInGrid();
+    document.getElementById('live-streams').style.display = 'grid';
+    document.getElementById('offline-streams').style.display = 'none';
+});
+
+document.getElementById('show-offline').addEventListener('click', function() {
+    showAllStreamsInGrid();
+    document.getElementById('live-streams').style.display = 'none';
+    document.getElementById('offline-streams').style.display = 'grid';
+});
