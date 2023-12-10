@@ -3,13 +3,13 @@ function hideStream(streamDivId) {
     const streamDiv = document.getElementById(streamDivId);
     if (streamDiv) {
         streamDiv.style.display = 'none';
-        setHiddenStreamCookie(streamDivId);
+        setHiddenStreamCookie(streamDivId, true);
     }
 }
 
-// Set cookie for hidden streams
-function setHiddenStreamCookie(streamDivId) {
-    document.cookie = `hidden_${streamDivId}=true; max-age=86400; path=/`;
+// Set or reset cookie for hidden streams
+function setHiddenStreamCookie(streamDivId, isHidden) {
+    document.cookie = `hidden_${streamDivId}=${isHidden}; max-age=604800; path=/`; // Expires in 7 days
 }
 
 // Function to show all streams in a grid layout
@@ -17,6 +17,18 @@ function showAllStreamsInGrid() {
     const streams = document.querySelectorAll('.stream');
     streams.forEach(stream => {
         stream.style.display = 'grid';
+    });
+}
+
+// Function to unhide all streams
+function unhideAllStreams() {
+    const hiddenStreams = document.querySelectorAll('.stream');
+    hiddenStreams.forEach(stream => {
+        stream.style.display = 'grid';
+        const streamId = stream.id;
+        if (streamId) {
+            setHiddenStreamCookie(streamId, false);
+        }
     });
 }
 
@@ -48,11 +60,16 @@ function createTwitchEmbed(streamer, container) {
     container.appendChild(streamDiv);
 
     new Twitch.Embed(embedDivId, {
-        width: 854, // Fixed width
-        height: 480, // Fixed height
+        width: 854,
+        height: 480,
         channel: streamer,
         parent: ["wheaties466.github.io"]
     });
+}
+
+// Function to add a new stream
+function addStream(streamName) {
+    createTwitchEmbed(streamName, document.getElementById('live-streams'));
 }
 
 // Function to render streams
@@ -92,14 +109,19 @@ fetch('streamers.txt')
     .catch(error => console.error('Error fetching streamers list:', error));
 
 // Event listeners for the toggle buttons
-document.getElementById('show-live').addEventListener('click', function() {
-    showAllStreamsInGrid();
-    document.getElementById('live-streams').style.display = 'grid';
-    document.getElementById('offline-streams').style.display = 'none';
+document.getElementById('show-live').addEventListener('click', showAllStreamsInGrid);
+document.getElementById('show-offline').addEventListener('click', showAllStreamsInGrid);
+document.getElementById('show-hidden').addEventListener('click', unhideAllStreams);
+
+document.getElementById('add-stream').addEventListener('click', function() {
+    document.getElementById('stream-name').style.display = 'block';
+    document.getElementById('stream-name').focus();
 });
 
-document.getElementById('show-offline').addEventListener('click', function() {
-    showAllStreamsInGrid();
-    document.getElementById('live-streams').style.display = 'none';
-    document.getElementById('offline-streams').style.display = 'grid';
+document.getElementById('stream-name').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        addStream(this.value);
+        this.value = '';
+        this.style.display = 'none';
+    }
 });
