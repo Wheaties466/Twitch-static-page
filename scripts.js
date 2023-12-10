@@ -52,14 +52,14 @@ async function renderStreams(streamers) {
     liveStreams.innerHTML = '';
     offlineStreams.innerHTML = '';
 
-    for (const streamer of streamers) {
+   // for (const streamer of streamers) {
         // Placeholder for checking if streamer is live
         // Replace with your logic or Twitch API call
         //if (/* logic to determine if streamer is live */) {
         //    createTwitchEmbed(streamer, liveStreams);
        // } else {
       //      createTwitchEmbed(streamer, offlineStreams);
-        }
+    //    }
     }
 }
 
