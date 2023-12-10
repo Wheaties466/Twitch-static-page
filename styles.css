@@ -6,20 +6,16 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    margin-top: 20px;
 }
 
 .stream {
     margin: 10px;
     border: 1px solid #ccc;
     padding: 5px;
+    position: relative;
 }
 
-/* Style for the buttons */
-button {
-    margin: 5px;
-    padding: 10px;
-    font-size: 16px;
-}
 .hide-button {
     position: absolute;
     top: 5px;
@@ -29,4 +25,10 @@ button {
     color: white;
     border: none;
     cursor: pointer;
+}
+
+button {
+    margin: 5px;
+    padding: 10px;
+    font-size: 16px;
 }
