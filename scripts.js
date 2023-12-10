@@ -12,13 +12,11 @@ function setHiddenStreamCookie(streamDivId) {
     document.cookie = `hidden_${streamDivId}=true; max-age=86400; path=/`; // Cookie expires in 1 day
 }
 
-// Function to show all streams
-function showAllStreams() {
+// Function to show all streams in a grid layout
+function showAllStreamsInGrid() {
     const streams = document.querySelectorAll('.stream');
     streams.forEach(stream => {
-        stream.style.display = 'block';
-        const streamDivId = stream.id;
-        document.cookie = `hidden_${streamDivId}=false; max-age=86400; path=/`; // Reset the cookie
+        stream.style.display = 'grid'; // Set display to grid to match CSS layout
     });
 }
 
@@ -98,19 +96,18 @@ fetch('streamers.txt')
     .then(text => {
         const streamers = text.split('\n').filter(Boolean);
         renderStreams(streamers);
-        // setInterval(checkStreamStatus, 300000); // Check every 5 minutes
     })
     .catch(error => console.error('Error fetching streamers list:', error));
 
 // Event listeners for the toggle buttons
 document.getElementById('show-live').addEventListener('click', function() {
-    showAllStreams();
-    document.getElementById('live-streams').style.display = 'flex';
+    showAllStreamsInGrid();
+    document.getElementById('live-streams').style.display = 'grid';
     document.getElementById('offline-streams').style.display = 'none';
 });
 
 document.getElementById('show-offline').addEventListener('click', function() {
-    showAllStreams();
+    showAllStreamsInGrid();
     document.getElementById('live-streams').style.display = 'none';
-    document.getElementById('offline-streams').style.display = 'flex';
+    document.getElementById('offline-streams').style.display = 'grid';
 });
