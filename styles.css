@@ -7,7 +7,7 @@ body {
 
 .stream-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(600px, 1fr)); /* Adjust minmax for desired column size */
+    grid-template-columns: repeat(auto-fill, minmax(650px, 1fr)); /* Adjust minmax for desired column size */
     gap: 20px;
     padding: 20px;
 }
