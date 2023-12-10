@@ -60,7 +60,7 @@ async function renderStreams(streamers) {
        // } else {
       //      createTwitchEmbed(streamer, offlineStreams);
     //    }
-    }
+   // }
 }
 
 // Fetch streamers from the text file and render streams
